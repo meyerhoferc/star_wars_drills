@@ -8,7 +8,8 @@ class ImperialProbeDroidTest < Minitest::Test
       serial_number: "C2-B3",
       power_level: 100,
       blaster_status: "OK",
-      scanner_status: "OK"
+      scanner_status: "OK",
+      hull_strength: 100
     }
   end
 
@@ -113,7 +114,17 @@ class ImperialProbeDroidTest < Minitest::Test
   end
 
   def test_hull_integrity
+    probe_droid = ImperialProbeDroid.new(good_data)
 
+    assert_equal "Hull is at Maximum Strength!", probe_droid.check_hull_integrity
+  end
+
+  def test_hull_can_take_damage
+    probe_droid = ImperialProbeDroid.new(good_data)
+
+    probe_droid.take_damage(4)
+    probe_droid.take_damage(10)
+    assert_equal "Hull is at 86%!", probe_droid.check_hull_integrity
   end
 
 end
