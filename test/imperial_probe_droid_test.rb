@@ -127,4 +127,20 @@ class ImperialProbeDroidTest < Minitest::Test
     assert_equal "Hull is at 86%!", probe_droid.check_hull_integrity
   end
 
+  def test_critical_alert_for_hull_damage
+    probe_droid = ImperialProbeDroid.new(good_data)
+
+    8.times {probe_droid.take_damage(10)}
+
+    assert_equal "Critical Alert! Hull at 20%", probe_droid.check_hull_integrity
+  end
+
+  def test_can_be_destroyed
+    probe_droid = ImperialProbeDroid.new(good_data)
+
+    10.times { probe_droid.take_damage(10) }
+
+    assert_equal true, probe_droid.destroyed?
+    assert_equal "Destroyed!!!", probe_droid.check_hull_integrity
+  end
 end
