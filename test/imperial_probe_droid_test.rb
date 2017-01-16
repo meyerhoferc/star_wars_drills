@@ -9,7 +9,8 @@ class ImperialProbeDroidTest < Minitest::Test
       power_level: 100,
       blaster_status: "OK",
       scanner_status: "OK",
-      hull_strength: 100
+      hull_strength: 100,
+      shield_status: "DOWN"
     }
   end
 
@@ -142,5 +143,21 @@ class ImperialProbeDroidTest < Minitest::Test
 
     assert_equal true, probe_droid.destroyed?
     assert_equal "Destroyed!!!", probe_droid.check_hull_integrity
+  end
+
+  def test_sheilds_up
+    probe_droid = ImperialProbeDroid.new(good_data)
+
+    assert_equal false, probe_droid.shields_up?
+    assert_equal "Shields at 0%!", probe_droid.check_shield_integrity
+
+    probe_droid.shields_up
+
+    assert_equal true, probe_droid.shields_up?
+    assert_equal "Shields at Maximum!", probe_droid.check_shield_integrity
+  end
+
+  def test_depleting_shield
+    
   end
 end
