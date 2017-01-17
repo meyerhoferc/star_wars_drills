@@ -168,6 +168,10 @@ class ImperialProbeDroidTest < Minitest::Test
 
     assert_equal "Shields Critical! 10% Remaining!", probe_droid.check_shield_integrity
 
+    probe_droid.take_damage(5)
+
+    assert_equal "Shields Critical! 5% Remaining!", probe_droid.check_shield_integrity
+
     2.times { probe_droid.take_damage(10) }
 
     assert_equal "Shields Down!", probe_droid.check_shield_integrity
