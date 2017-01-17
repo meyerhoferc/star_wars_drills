@@ -149,7 +149,7 @@ class ImperialProbeDroidTest < Minitest::Test
     probe_droid = ImperialProbeDroid.new(good_data)
 
     assert_equal false, probe_droid.shields_up?
-    assert_equal "Shields at 0%!", probe_droid.check_shield_integrity
+    assert_equal "Shields Down!", probe_droid.check_shield_integrity
 
     probe_droid.shields_up
 
@@ -158,6 +158,19 @@ class ImperialProbeDroidTest < Minitest::Test
   end
 
   def test_depleting_shield
-    
+    probe_droid = ImperialProbeDroid.new(good_data)
+
+    assert_equal false, probe_droid.shields_up?
+    assert_equal "Shields Down!", probe_droid.check_shield_integrity
+
+    probe_droid.shields_up
+    9.times { probe_droid.take_damage(10) }
+
+    assert_equal "Shields Critical! 10% Remaining!", probe_droid.check_shield_integrity
+
+    2.times { probe_droid.take_damage(10) }
+
+    assert_equal "Shields Down!", probe_droid.check_shield_integrity
+    assert_equal "Hull is at 90%!", probe_droid.check_hull_integrity
   end
 end
