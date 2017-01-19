@@ -24,7 +24,7 @@ class ImperialProbeDroidTest < Minitest::Test
   end
 
   def test_can_create_probe_droid
-    probe_droid = ImperialProbeDroid.new
+    probe_droid = ImperialProbeDroid.new(good_data)
 
     assert_instance_of ImperialProbeDroid, probe_droid
   end
@@ -45,7 +45,7 @@ class ImperialProbeDroidTest < Minitest::Test
     probe_droid = ImperialProbeDroid.new(good_data)
     probe_droid2 = ImperialProbeDroid.new(bad_data)
 
-    assert_equal true, probe_droid.scanner_functioning?
+    assert probe_droid.scanner_functioning?
     refute probe_droid2.scanner_functioning?
   end
 
@@ -66,7 +66,7 @@ class ImperialProbeDroidTest < Minitest::Test
     probe_droid = ImperialProbeDroid.new(good_data)
     probe_droid2 = ImperialProbeDroid.new(bad_data)
 
-    assert_equal true, probe_droid.blaster_functioning?
+    assert probe_droid.blaster_functioning?
     refute probe_droid2.blaster_functioning?
   end
 
@@ -141,26 +141,26 @@ class ImperialProbeDroidTest < Minitest::Test
 
     10.times { probe_droid.take_damage(10) }
 
-    assert_equal true, probe_droid.destroyed?
+    assert probe_droid.destroyed?
     assert_equal "Destroyed!!!", probe_droid.check_hull_integrity
   end
 
   def test_sheilds_up
     probe_droid = ImperialProbeDroid.new(good_data)
 
-    assert_equal false, probe_droid.shields_up?
+    refute probe_droid.shields_up?
     assert_equal "Shields Down!", probe_droid.check_shield_integrity
 
     probe_droid.shields_up
 
-    assert_equal true, probe_droid.shields_up?
+    assert probe_droid.shields_up?
     assert_equal "Shields at Maximum!", probe_droid.check_shield_integrity
   end
 
   def test_depleting_shield
     probe_droid = ImperialProbeDroid.new(good_data)
 
-    assert_equal false, probe_droid.shields_up?
+    refute probe_droid.shields_up?
     assert_equal "Shields Down!", probe_droid.check_shield_integrity
 
     probe_droid.shields_up
